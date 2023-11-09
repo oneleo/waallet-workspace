@@ -1,5 +1,7 @@
 import type { PlasmoCSConfig } from "plasmo"
-import testPageUrl from "url:~windows/test.html"
+
+import * as Messaging from "@plasmohq/messaging"
+import * as Relay from "@plasmohq/messaging/relay"
 
 import { WaalletProvider } from "~packages/provider/waallet"
 
@@ -15,8 +17,11 @@ console.log(
 
 const callback = async (e: MessageEvent<string>) => {
   if (e.data === "post: connect") {
-    console.log(`contents listen: connect to ${testPageUrl}`)
-    window.open(testPageUrl, "_blank", "width=400, height=500")
+    console.log(`contents listen: sendToBackground`)
+    const resp = await Messaging.sendToBackground({
+      name: "window" as keyof Messaging.MessagesMetadata,
+      body: {}
+    })
   }
 }
 
