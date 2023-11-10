@@ -19,6 +19,6 @@ export class WaalletProvider {
   }
 
   public connect = async (): Promise<any> => {
-    window.postMessage("post: connect", window.location.origin)
+    window.postMessage("post:window", window.location.origin)
   }
 }

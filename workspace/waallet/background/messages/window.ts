@@ -3,17 +3,20 @@ import * as Browser from "webextension-polyfill"
 
 import * as Messaging from "@plasmohq/messaging"
 
-export type RequestBody = {}
+export type RequestBody = {
+  in: string
+}
 
-export type ResponseBody = {}
+export type ResponseBody = {
+  out: string
+}
 
 const handler: Messaging.PlasmoMessaging.MessageHandler<
   RequestBody,
   ResponseBody
 > = async (req, res) => {
-  console.log(`[messaging][window] Request: ${JSON.stringify(req)}`)
+  console.log(`[background][messaging][window] Request: ${JSON.stringify(req)}`)
 
-  console.log(`[messaging][window] Import url: ${windowUrl}`)
   await Browser.windows.create({
     url: windowUrl,
     focused: true,
@@ -22,7 +25,9 @@ const handler: Messaging.PlasmoMessaging.MessageHandler<
     height: 720
   })
 
-  res.send({})
+  res.send({
+    out: `Opened: ${windowUrl}`
+  })
 }
 
 export default handler
